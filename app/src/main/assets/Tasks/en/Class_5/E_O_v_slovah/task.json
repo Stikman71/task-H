@@ -1,0 +1,37 @@
+{
+  "1": {
+    "SENTENCE": {
+      "template": "Today I _ and _ in class.",
+      "blanks": ["_1_", "_2_"],
+      "answers": ["read", "wrote"],
+      "options": ["read", "wrote", "drew", "played"]
+    }
+  },
+  "2": {
+    "FILLTHEBLANK": {
+      "template": ["Пр_вет","При_ет","Пр_вет","Пр_в_т"],
+      "blanks": [],
+      "answers": ["Привет", "Привет","Привет","Привет"],
+      "options": []
+    }
+  },
+  "9": {
+    "SELECTWORD": {
+      "template": [
+        "Hello",
+        "My name ***",
+        "I program in Kotlin",
+        "Bye",
+        "For",
+        "Full test"
+      ],
+      "blanks": [],
+      "answers": [
+        "My",
+        "name",
+        "***"
+      ],
+      "options": []
+    }
+  }
+}

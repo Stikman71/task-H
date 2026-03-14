@@ -1,0 +1,8 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/slotText"
+    android:padding="16dp"
+    android:background="@android:color/darker_gray"
+    android:text="_____"
+    android:layout_margin="8dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>

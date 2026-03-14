@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- TEXT -->
+    <style name="AppText">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+
+    <style name="AppText.Header" parent="AppText">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppText.Body" parent="AppText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">6dp</item>
+    </style>
+
+    <style name="AppText.Secondary" parent="AppText">
+        <item name="android:textColor">@color/colorTextSecondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- BUTTON -->
+    <style name="AppButton.Base" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/colorButtonText</item>
+        <item name="backgroundTint">@color/colorButtonBackground</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="cornerRadius">8dp</item> <!-- скругление -->
+    </style>
+
+    <!-- Для основной кнопки -->
+    <style name="AppButton.Primary" parent="AppButton.Base"/>
+
+    <style name="AppButton.Recycler" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/colorButtonText</item> <!-- темный текст -->
+        <item name="backgroundTint">@color/colorButtonBackground</item> <!-- оранжевый фон -->
+        <item name="android:textSize">16sp</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+
+    <style name="DragTextViewDefaultStyle">
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingBottom">8dp</item>
+
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+
+        <!-- белый текст -->
+        <item name="android:textColor">@color/colorButtonBackground</item>
+
+        <!-- прозрачный фон -->
+        <item name="android:background">@android:color/transparent</item>
+
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- Стиль для TextView в FillInTheBlankFragment -->
+    <style name="WordLayoutTextViewStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/colorButtonBackground</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
+    <!-- Стиль для EditText в FillInTheBlankFragment -->
+    <style name="WordLayoutEditTextStyle">
+        <item name="android:textColor">#E47E17</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="colorControlActivated">#FF0000</item>
+    </style>
+
+    <style name="SelectableWord">
+
+        <!-- цвет текста -->
+        <item name="android:textColor">@android:color/white</item>
+
+        <!-- размер -->
+        <item name="android:textSize">18sp</item>
+
+        <!-- стиль текста -->
+        <item name="android:textStyle">bold</item>
+
+        <!-- выравнивание -->
+        <item name="android:gravity">center</item>
+
+        <!-- внутренние отступы -->
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+
+    </style>
+
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Класс 1 -->
+    <string name="class_0_topic_1">Текст для Альфа</string>
+    <string name="class_0_topic_2">Текст для Бета</string>
+    <string name="class_0_topic_3">Текст для Гамма</string>
+
+    <!-- Класс 2 -->
+    <string name="class_1_topic_1">Текст для Дельта</string>
+    <string name="class_1_topic_2">Текст для Эпсилон</string>
+</resources>

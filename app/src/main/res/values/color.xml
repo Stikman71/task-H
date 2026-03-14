@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Основные цвета -->
+    <color name="colorBackground">#20232A</color>       <!-- темный фон приложения -->
+    <color name="colorSurface">#2C2F3A</color>         <!-- фон карточек / RecyclerView -->
+    <color name="colorAccent">#FFA726</color>          <!-- акцент (кнопки, spinner) -->
+
+    <!-- Текст -->
+    <color name="colorTextPrimary">#E0E0E0</color>     <!-- основной текст -->
+    <color name="colorTextSecondary">#B0B0B0</color>   <!-- второстепенный текст -->
+    <color name="colorTextButton">#20232A</color>      <!-- текст на кнопках -->
+
+    <!-- Сигнальные цвета -->
+    <color name="colorDanger">#F44336</color>          <!-- ошибки / предупреждения -->
+
+    <color name="colorButtonBackground">#FFA726</color> <!-- оранжевый фон -->
+    <color name="colorButtonText">#20232A</color>       <!-- темный текст -->
+
+    <color name="colorPrimaryVariant">#3700B3</color>
+</resources>

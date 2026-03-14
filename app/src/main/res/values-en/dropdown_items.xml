@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/values/dropdown_items.xml -->
+<resources>
+    <string-array name="class_5_topics">
+        <item>1:E_O_v_slovah:E_O_v_slovah</item>
+        <item>2:Dlya_Proverki:Dlya_Proverki</item>
+        <item>3:test3:111</item>
+    </string-array>
+
+    <string-array name="class_6_topics">
+        <item>4:test1:Дельта</item>
+        <item>5:test2:Эпсилон</item>
+    </string-array>
+
+    <string-array name="class_7_topics">
+        <item>6:test1:Зета</item>
+        <item>7:test2:Эта</item>
+        <item>8:test3:Тета</item>
+    </string-array>
+</resources>

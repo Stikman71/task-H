@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemWordRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/textWord"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Пример слова"
+        android:textSize="16sp"
+        android:textColor="#000000" />
+
+    <ImageView
+        android:id="@+id/iconCheck"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@android:drawable/checkbox_off_background"
+        android:contentDescription="Check icon"
+        android:visibility="gone" />
+
+</LinearLayout>

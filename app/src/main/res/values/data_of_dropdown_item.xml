@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="topic_1_tasks">
+        <item>1:HOME:ДЗ?</item>
+        <item>2:READ:Теория</item>
+        <item>3:CHECK TASK 1:Контрольное задание 1</item>
+        <item>4:CHECK TASK 2:Контрольное задание 2</item>
+        <item>5:VIDEO:TEST_VIDEO</item>
+        <item>6:TASK:Тест первая тема</item>
+    </string-array>
+
+    <string-array name="topic_2_tasks">
+        <item>1:HOME:home</item>
+        <item>2:READ:read</item>
+        <item>3:SENTENCE:tsk_Beta_1</item>
+    </string-array>
+
+    <string-array name="topic_3_tasks">
+        <item>1:home</item>
+        <item>2:READ:read</item>
+    </string-array>
+
+    <string-array name="topic_4_tasks">
+        <item>1:home</item>
+        <item>2:READ:read</item>
+        <item>3:tsk_1</item>
+        <item>4:tsk_2</item>
+        <item>5:tsk_3</item>
+    </string-array>
+
+    <string-array name="topic_5_tasks">
+        <item>1:home</item>
+        <item>2:READ:read</item>
+    </string-array>
+
+</resources>

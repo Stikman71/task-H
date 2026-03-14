@@ -1,0 +1,46 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flexbox="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorSurface"
+    android:padding="8dp">
+
+    <!-- Первый контейнер -->
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/container1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSurface"
+        android:alpha="1"
+        android:padding="10dp"
+        flexbox:flexWrap="wrap"
+        flexbox:justifyContent="flex_start"
+
+        flexbox:alignItems="center"/>
+
+    <!-- Второй контейнер -->
+    <com.helper.TaskFragments.sentencesType.layout.ExtendFlexboxLayout
+        android:id="@+id/container2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#353845"
+        android:alpha="1"
+        android:layout_marginTop="16dp"
+        flexbox:flexWrap="wrap"
+        flexbox:justifyContent="flex_start"
+        flexbox:alignItems="flex_start"/>
+
+    <Button
+        android:id="@+id/testButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test Button"
+        android:layout_marginTop="16dp"
+        android:background="#FF5733"
+        android:textColor="#FFFFFF"/>
+
+
+</LinearLayout>

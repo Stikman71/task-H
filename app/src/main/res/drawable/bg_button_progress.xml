@@ -1,0 +1,21 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- нижний слой: фон кнопки -->
+    <item android:id="@+id/background">
+        <shape android:shape="rectangle">
+            <solid android:color="?attr/colorPrimary"/>
+            <corners android:radius="12dp"/>
+        </shape>
+    </item>
+
+    <!-- верхний слой: прогресс -->
+    <item android:id="@+id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <solid android:color="?attr/colorPrimaryVariant"/>
+                <corners android:radius="12dp"/>
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>
