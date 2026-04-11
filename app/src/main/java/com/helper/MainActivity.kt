@@ -1,8 +1,7 @@
 package com.helper
 
-import android.app.Activity
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.helper.DataManager.AppSession
 import com.helper.DataManager.DataLC
-import com.helper.TaskFragments.VideoFragment
+import com.helper.TaskFragments.TextInput.TextInputFragment
 import com.helper.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -46,15 +45,8 @@ class MainActivity : AppCompatActivity() {
         }
         if (savedInstanceState == null) {
             OpenFragment(HelloFragment.newInstance(), R.id.content_container, false)
+            //OpenFragment(TextInputFragment.newInstance(), R.id.content_container, false)
         }
-
-
-        //OpenFragment(HelloFragment.newInstance(),R.id.frame_conteiner)
-        //OpenFragment(MainFragment.newInstance(),R.id.frame_conteiner2)
-        //OpenFragment(ClientFragment.newInstance(),R.id.frame_conteiner)
-        //OpenFragment(HelloFragment.newInstance(),R.id.content_container,false)
-        //OpenFragment(TaskFragment.newInstance(TaskType.SENTENCE),R.id.content_container)
-        //OpenFragment(VideoFragment.newInstance(),R.id.content_container)
 
 
         dataLC.currentSession.observe(this) { session ->
@@ -62,6 +54,9 @@ class MainActivity : AppCompatActivity() {
         }
         dataLC.currentClient.observe(this){
             println("Name=${it.name}, sName=${it.sName}, Activity=${it.activity}")
+        }
+        dataLC.currentSession.observe(this) {
+            Log.e("DEBUG", "LANGUAGE IS CHANGED: ${it.language}")
         }
     }
 

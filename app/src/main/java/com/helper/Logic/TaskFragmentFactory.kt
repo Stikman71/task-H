@@ -10,7 +10,9 @@ import com.helper.TaskFragments.SelectWord.WordSelectionFragment
 import com.helper.TaskFragments.TaskButtonsFragment
 import com.helper.TaskFragments.TaskFragmentBase
 import com.helper.TaskFragments.TaskSliderFragment
+import com.helper.TaskFragments.TextInput.TextInputFragment
 import com.helper.TaskFragments.VideoFragment
+import com.helper.TaskFragments.sentencesType.ScatterIntoGroupsFragment
 import com.helper.TaskFragments.sentencesType.SentenceFragment
 
 enum class TaskType {
@@ -20,6 +22,8 @@ enum class TaskType {
     SENTENCE,
     FILLTHEBLANK,
     SELECTWORD,
+    SCATTER,
+    TEXTINPUT,
     BUTTONS,
 }
 
@@ -34,6 +38,8 @@ object TaskFragmentFactory {
 //            TaskType.READ-> ReadingFragment()
 //            TaskType.HOME -> Fragment()
             TaskType.SENTENCE-> SentenceFragment()
+            TaskType.SCATTER -> ScatterIntoGroupsFragment()
+            TaskType.TEXTINPUT -> TextInputFragment()
             else -> throw IllegalArgumentException("TaskType $type is not supported")
         }
     }

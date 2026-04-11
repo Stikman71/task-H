@@ -1,6 +1,7 @@
 package com.helper.TaskFragments.sentencesType.ui
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.ViewGroup
@@ -35,7 +36,7 @@ object SafeClone {
             newTv.setPadding(origTv.paddingLeft, origTv.paddingTop, origTv.paddingRight, origTv.paddingBottom)
             newTv.textSize = origTv.textSize / context.resources.displayMetrics.scaledDensity
             newTv.setTextColor(origTv.currentTextColor)
-            newTv.setBackgroundColor((origTv.background as? ColorDrawable)?.color ?: 0xFFDDDDDD.toInt())
+            newTv.setBackgroundColor((origTv.background as? ColorDrawable)?.color ?: Color.TRANSPARENT)
             newTv.alpha = origTv.alpha
             newTv.translationX = 0f
             newTv.translationY = 0f

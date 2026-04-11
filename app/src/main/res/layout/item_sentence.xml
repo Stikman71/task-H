@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flexbox="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- Flexbox с предложением -->
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/sentenceFlexbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        flexbox:flexWrap="wrap"
+        flexbox:justifyContent="flex_start"
+        flexbox:alignItems="center"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- ExtendFlexboxLayout с draggable ответами -->
+    <com.helper.TaskFragments.sentencesType.layout.ExtendFlexboxLayout
+        android:id="@+id/answersContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        flexbox:flexWrap="wrap"
+        flexbox:justifyContent="flex_start"
+        flexbox:alignItems="flex_start"
+        android:background="#ffd700"
+        android:padding="4dp"/>
+</LinearLayout>

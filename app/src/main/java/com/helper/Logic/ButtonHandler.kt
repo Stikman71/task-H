@@ -1,9 +1,12 @@
 package com.helper.Logic
 
+import android.content.res.ColorStateList
+import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.helper.R
@@ -18,7 +21,7 @@ class ButtonAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ButtonViewHolder {
         // создаём MaterialButton с нашим стилем
         val button = MaterialButton(
-            ContextThemeWrapper(parent.context, R.style.AppButton_Recycler)
+            ContextThemeWrapper(parent.context, R.style.MyButtonStyle)
         ).apply {
             // LayoutParams с margin
             layoutParams = RecyclerView.LayoutParams(
@@ -28,6 +31,18 @@ class ButtonAdapter(
                 it.setMargins(0, 8, 0, 8)
             }
         }
+
+//        // Получаем цвета для текста и фона
+//        val textColor = ContextCompat.getColor(parent.context, R.color.colorTextPrimary)
+//        val backgroundColor = ContextCompat.getColor(parent.context, R.color.colorButtonBackground)
+//
+//        // Логирование цветов для проверки
+//        Log.d("ButtonDebug", "Text Color: $textColor")
+//        Log.d("ButtonDebug", "Background Color: $backgroundColor")
+//
+//        // Применяем цвета к кнопке
+//        button.setTextColor(textColor) // Устанавливаем цвет текста
+//        button.backgroundTintList = ColorStateList.valueOf(backgroundColor) // Устанавливаем цвет фона
 
         // задаём layoutParams с margin
         val params = RecyclerView.LayoutParams(

@@ -28,11 +28,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:spinnerMode="dropdown"
-        android:backgroundTint="@color/colorAccent"
+        android:dropDownWidth="match_parent"
         app:layout_constraintTop_toBottomOf="@id/textView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="12dp"
+        android:background="@drawable/spinner_background"/>
 
     <!-- RecyclerView для кнопок / матрицы -->
     <androidx.recyclerview.widget.RecyclerView
@@ -42,35 +43,8 @@
         android:clipToPadding="false"
         android:padding="8dp"
         app:layout_constraintTop_toBottomOf="@id/spinner"
-        app:layout_constraintBottom_toTopOf="@id/button_container"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Контейнер для двух кнопок снизу -->
-    <LinearLayout
-        android:id="@+id/button_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="start"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_ch"
-            style="@style/AppButton.Primary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ч"
-            android:layout_marginEnd="8dp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_d"
-            style="@style/AppButton.Primary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Д"/>
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

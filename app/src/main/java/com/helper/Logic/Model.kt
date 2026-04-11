@@ -1,6 +1,7 @@
 package com.helper.Logic
 
 import android.util.Log
+import com.helper.TaskFragments.sentencesType.Models.DragTextView
 
 data class SpinnerItem(
     val id: Int,
@@ -28,14 +29,12 @@ data class AnswerCheckResult(
 }
 
 object GradeScale {
-
     private val grades = listOf(
         0f..54f to 2,
         55f..69f to 3,
         70f..84f to 4,
         85f..100f to 5
     )
-
     fun getGrade(score: Float): Int {
         return grades.firstOrNull { score in it.first }?.second ?: 2
     }
@@ -46,7 +45,8 @@ abstract class BaseTask(
     val taskType: TaskType,
     val difficulty: String,
     val language: String,
-    val topic: String
+    val topic: String,
+    var baseUserAnswers: Any
 ) {
 
     var isCorrect: Boolean = false
@@ -68,7 +68,9 @@ abstract class BaseTask(
     }
 
     // Абстрактный метод для загрузки ответов
-    abstract fun loadAnswers(): List<String>
+    open fun loadAnswers(): AnswersWrapper {
+        return AnswersWrapper(baseUserAnswers)
+    }
 
     companion object {
         fun getEmptyTask(
@@ -82,10 +84,34 @@ abstract class BaseTask(
                 TaskType.SENTENCE -> TaskSentences(id, taskType, difficulty, language, topic)
                 TaskType.FILLTHEBLANK -> TaskFillTheBlank(id, taskType, difficulty, language, topic)
                 TaskType.SELECTWORD -> TaskWordSelector(id, taskType, difficulty, language, topic)
+                TaskType.TEXTINPUT -> TaskTextInput(id, taskType, difficulty, language, topic)
+                TaskType.SCATTER -> TaskScatterWords(id, taskType, difficulty, language, topic)
                 else -> throw IllegalArgumentException("Unsupported TaskType: $taskType")
             }
         }
     }
+}
+
+
+class AnswersWrapper(internal val data: Any) {
+
+    fun asList(): List<String>? =
+        (data as? List<*>)?.filterIsInstance<String>()
+
+    fun asMutableList(): MutableList<String>? =
+        (data as? MutableList<*>)?.filterIsInstance<String>()?.toMutableList()
+
+    fun asMap(): Map<String, List<String>>? =
+        (data as? Map<*, *>)?.mapNotNull { (k, v) ->
+            val key = k as? String
+            val value = (v as? List<*>)?.filterIsInstance<String>()
+            if (key != null && value != null) key to value else null
+        }?.toMap()
+
+    fun asMutableMap(): MutableMap<String, List<String>>? =
+        asMap()?.toMutableMap()
+
+    private inline fun <reified T> asType(): T? = data as? T
 }
 
 
@@ -95,11 +121,11 @@ class TaskSentences(
     difficulty: String,
     language: String,
     topic: String,
-    var userAnswers: MutableList<String> = mutableListOf()
-) : BaseTask(id, taskType, difficulty, language, topic) {  // Теперь нет необходимости передавать данные в конструктор родительского класса
+    var userAnswers: MutableList<MutableList<String>> = mutableListOf()
+) : BaseTask(id, taskType, difficulty, language, topic,userAnswers) {  // Теперь нет необходимости передавать данные в конструктор родительского класса
 
     // Реализация загрузки ответов
-    override fun loadAnswers(): List<String> = userAnswers
+
 
     // Переопределение логирования
     override fun log() {
@@ -116,11 +142,8 @@ class TaskFillTheBlank(
     difficulty: String,
     language: String,
     topic: String,
-    var userAnswers: MutableList<String> = mutableListOf()
-) : BaseTask(id, taskType, difficulty, language, topic) {  // Теперь нет необходимости передавать данные в конструктор родительского класса
-
-    // Реализация загрузки ответов
-    override fun loadAnswers(): List<String> = userAnswers
+    var userAnswers: MutableList<List<String>> = mutableListOf()
+) : BaseTask(id, taskType, difficulty, language, topic,userAnswers) {  // Теперь нет необходимости передавать данные в конструктор родительского класса
 
     // Переопределение логирования
     override fun log() {
@@ -138,10 +161,56 @@ class TaskWordSelector(
     language: String,
     topic: String,
     var userAnswers: MutableList<String> = mutableListOf()
-) : BaseTask(id, taskType, difficulty, language, topic) {  // Теперь нет необходимости передавать данные в конструктор родительского класса
+) : BaseTask(id, taskType, difficulty, language, topic,userAnswers) {  // Теперь нет необходимости передавать данные в конструктор родительского класса
+
+
+    // Переопределение логирования
+    override fun log() {
+        super.log()
+        Log.d("Task Info", "User Answers: ${if (userAnswers.isEmpty()) "None" else userAnswers.joinToString(", ")}")
+        Log.d("Task Info", "=================================================")
+        Log.d("Task Info", "")
+    }
+}
+
+class TaskScatterWords(
+    id: String,
+    taskType: TaskType,
+    difficulty: String,
+    language: String,
+    topic: String,
+    var userAnswers: MutableMap<String, List<String>> = mutableMapOf()
+) : BaseTask(id, taskType, difficulty, language, topic,userAnswers) {
+
+    init {
+        // Гарантируем наличие ключей "left" и "right"
+        if (!userAnswers.containsKey("left")) userAnswers["left"] = listOf()
+        if (!userAnswers.containsKey("right")) userAnswers["right"] = listOf()
+    }
+
+    // Переопределение логирования
+    override fun log() {
+        super.log()
+        Log.d(
+            "Task Info",
+            "User Answers: ${if (userAnswers.isEmpty()) "None" else userAnswers.entries.joinToString { "${it.key} -> ${it.value}" }}"
+        )
+        Log.d("Task Info", "=================================================")
+        Log.d("Task Info", "")
+    }
+}
+
+class TaskTextInput(
+    id: String,
+    taskType: TaskType,
+    difficulty: String,
+    language: String,
+    topic: String,
+    var userAnswers: MutableList<String> = mutableListOf()
+) : BaseTask(id, taskType, difficulty, language, topic,userAnswers) {  // Теперь нет необходимости передавать данные в конструктор родительского класса
 
     // Реализация загрузки ответов
-    override fun loadAnswers(): List<String> = userAnswers
+
 
     // Переопределение логирования
     override fun log() {

@@ -4,10 +4,12 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.flexbox.JustifyContent
@@ -15,6 +17,7 @@ import com.helper.DataManager.ClientTaskSession
 import com.helper.Logic.AnswerCheckResult
 import com.helper.Logic.BaseTask
 import com.helper.Logic.JSON.JsonUtils
+import com.helper.Logic.TaskChecker
 import com.helper.Logic.TaskFillTheBlank
 import com.helper.Logic.TaskType
 import com.helper.Logic.TaskWordSelector
@@ -23,7 +26,9 @@ import com.helper.TaskFragment
 import com.helper.TaskFragments.TaskFragmentBase
 import com.helper.databinding.FragmentWordSelectionBinding
 import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlin.collections.map
 import kotlin.collections.mutableListOf
@@ -35,6 +40,7 @@ class WordSelectionFragment :
 
     private lateinit var template: List<String>
     private lateinit var answers: List<String>
+    private var option: String="multiple"
     private var selectableTextView=mutableListOf<TextView>()
     private val currentAnswers = mutableListOf<String>()
     private var _sessionClient_test = mutableListOf<String>()
@@ -47,13 +53,14 @@ class WordSelectionFragment :
     }
 
     override fun checkButtonIsPressed() {
-        compareAnswers()
+        collectClientAnswer()
         saveClientTaskSession()
+        compareAnswers()
     }
 
     override fun clearButtonIsPressed() {
         currentAnswers.clear()
-        showItems()
+        showItem()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,11 +69,12 @@ class WordSelectionFragment :
         loadFragmentDataFromJSON()
         parsedTemplate()
         parsedAnswer()
+        parsedOptions()
 
         Log.d("DEBUGJSON", "Template = $template")
         Log.d("DEBUGJSON", "Answers = $answers")
         initSessionTest()
-        showItems()
+        showItem()
         ClientTaskSession
             .getTaskByTypeAndId(TaskType.valueOf(_session.taskType!!), _session.taskID.toString())
             ?.let { task ->
@@ -83,15 +91,6 @@ class WordSelectionFragment :
     // ----------------------------
     // Построение UI
     // ----------------------------
-
-    private fun showItems() {
-        binding.rootContainer.removeAllViews()
-
-        template.forEach { item ->
-            binding.rootContainer.addView(createSentenceRow(item))
-        }
-    }
-
     private fun createSentenceRow(text: String): View {
         val flexbox = FlexboxLayout(requireContext()).apply {
             flexWrap = FlexWrap.WRAP
@@ -99,24 +98,32 @@ class WordSelectionFragment :
             setPadding(0, 16, 0, 16)
         }
 
-        val words = text.split(" ")
+        if (option == "single") {
+            // Вся строка как один элемент
+            val tv = createSelectableWord(text)
+            selectableTextView.add(tv)
+            flexbox.addView(tv)
+        } else {
+            // Старое поведение
+            val words = text.split(" ")
 
-        words.forEach { word ->
-            val _tmp=createSelectableWord(word)
-            selectableTextView.add(_tmp)
-            flexbox.addView(_tmp)
+            words.forEach { word ->
+                val tv = createSelectableWord(word)
+                selectableTextView.add(tv)
+                flexbox.addView(tv)
+            }
         }
 
         return flexbox
     }
 
     private fun createSelectableWord(word: String): TextView {
-        return TextView(requireContext(), null,0,R.style.SelectableWord).apply {
+        return TextView(requireContext(), null, 0, R.style.SelectableWord).apply {
             text = word
             textSize = 18f
 
             // Белый цвет текста
-            //setTextColor(Color.WHITE)
+            // setTextColor(Color.WHITE)
 
             // Убираем фон-кнопку
             background = null
@@ -124,8 +131,14 @@ class WordSelectionFragment :
             // Отступы
             setPadding(8, 4, 8, 4)
 
+            // Выравнивание текста
+            gravity = Gravity.START
+            textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+
+            // Поддержка single-element режима
             layoutParams = ViewGroup.MarginLayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
+                if (option == "single") ViewGroup.LayoutParams.MATCH_PARENT
+                else ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             ).apply {
                 setMargins(8, 8, 8, 8)
@@ -153,11 +166,11 @@ class WordSelectionFragment :
 
     private fun applyUnderline(textView: TextView) {
         textView.paintFlags = textView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-        textView.setTextColor(Color.GREEN) // цвет текста не меняем
+        textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorCorrect)) // цвет текста не меняем
     }
     private fun markAsError(textView: TextView) {
         textView.paintFlags = textView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-        textView.setTextColor(Color.RED)
+        textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorDanger))
     }
 
     private fun removeUnderline(textView: TextView) {
@@ -213,42 +226,28 @@ class WordSelectionFragment :
                 }
             }
         }
+        compareAnswers()
     }
 
     override fun compareAnswers() {
-        val selectedSet = currentAnswers.toSet()
+        val selectedSet = currentAnswers.map { normalize(it) }.toSet()
         val targetSet = answers.toSet()
 
-        // Проверяем, выбрал ли пользователь все и только правильные слова
-        val isCompletelyCorrect = selectedSet == targetSet
-
-        // количество правильных слов, которые дал пользователь
-        val correctCount = selectedSet.count { it in targetSet }
-
-        // общее количество правильных слов
-        val totalCount = targetSet.size
-
-        // процент выполнения в Double
-        val percentage = if (totalCount > 0) {
-            // Если есть лишние слова, уменьшаем процент
-            val extraCount = (selectedSet - targetSet).size
-            val rawPercentage = correctCount.toDouble() / totalCount * 100.0
-            val adjustedPercentage = if (extraCount > 0) rawPercentage * totalCount / (totalCount + extraCount) else rawPercentage
-            adjustedPercentage
-        } else 0.0
-
-        val result = AnswerCheckResult(correctCount, totalCount, percentage)
-        ClientTaskSession.updateTaskResult(_session.taskID.toString(), result)
-
-        result.log()
-
         selectableTextView.forEach { textView ->
-            val word = textView.text.toString()
+            val word = normalize(textView.text.toString())
             when {
                 word in targetSet && word in selectedSet -> applyUnderline(textView)     // правильно выбран
                 word in selectedSet && word !in targetSet -> markAsError(textView)      // выбран, но неправильно
-                else -> removeUnderline(textView)                                        // не выбран
+                else -> removeUnderline(textView)                                      // не выбран
             }
+        }
+    }
+    private fun normalize(word: String): String {
+        return if (option == "multiple") {
+            // убираем все точки, запятые и пробелы
+            word.replace("[.,\\s]".toRegex(), "")
+        } else {
+            word
         }
     }
 
@@ -269,7 +268,28 @@ class WordSelectionFragment :
     }
 
     override fun parsedOptions() {
+        val optionsElement = qst?.get("options")
 
+        Log.d("DEBUG", "raw optionsElement = $optionsElement")
+        if (optionsElement is JsonObject) {
+            val modeValue = optionsElement["mode"]
+            option = modeValue
+                ?.jsonPrimitive
+                ?.content
+                ?: "multiple"
+
+        } else {
+            option = "multiple"
+        }
+        Log.d("DEBUG", "FINAL option = $option")
+    }
+
+    override fun showItem() {
+        binding.rootContainer.removeAllViews()
+
+        template.forEach { item ->
+            binding.rootContainer.addView(createSentenceRow(item))
+        }
     }
 
     override fun collectClientAnswer() {
@@ -277,13 +297,14 @@ class WordSelectionFragment :
     }
 
     override fun createBaseTask(): BaseTask {
+        val normalizedAnswers = currentAnswers.map { normalize(it) }.toMutableList()
         return TaskWordSelector(
             id = _session.taskID.toString(),
             taskType = TaskType.valueOf(_session.taskType!!),
             difficulty = _session.classID.toString(),
             language = _session.language!!,
             topic = _session.topic!!,
-            userAnswers = currentAnswers.toMutableList()
+            userAnswers = normalizedAnswers
         )
     }
 
@@ -291,9 +312,16 @@ class WordSelectionFragment :
         if (bt !is TaskWordSelector) {
             throw IllegalArgumentException("Critical Error: updateClientTaskSession expects TaskSentences, got ${bt::class.simpleName}")
         }
-        val newAnswers = currentAnswers.toMutableList()
-        bt.userAnswers.clear()
-        bt.userAnswers.addAll(newAnswers)
+        bt.userAnswers=currentAnswers.map { normalize(it) }.toMutableList()
+        //  JSON с эталонными ответами для текущего задания
+        val je = qst!!.get("answers")!!
+
+        // проверку через TaskChecker
+        val result = TaskChecker.checkAnswer(TaskType.SELECTWORD, bt, je)
+
+        // Сохраняем результат в сессии
+        ClientTaskSession.updateTaskResult(_session.taskID.toString(), result)
+        result.log()
         return bt
     }
 

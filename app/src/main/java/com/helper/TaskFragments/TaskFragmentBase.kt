@@ -70,23 +70,27 @@ abstract class TaskFragmentBase<T : ViewBinding> : Fragment() {
     abstract fun parsedTemplate()
     abstract fun parsedBlank()
     abstract fun parsedOptions()
+    abstract fun showItem()
 
     abstract fun collectClientAnswer()
     abstract fun createBaseTask():BaseTask
     abstract fun updateClientTaskSession(bt: BaseTask): BaseTask
     open fun saveClientTaskSession(): BaseTask? {
-        compareAnswers()
+
         val taskType = TaskType.valueOf(_session.taskType!!)
         val taskId = _session.taskID.toString()
 
         // Получаем существующее задание или создаём новое
-        val resultTask: BaseTask = ClientTaskSession
-            .getTaskByTypeAndId(taskType, taskId)
-            ?.also { updateClientTaskSession(it) } // обновляем существующее
+        val task = ClientTaskSession.getTaskByTypeAndId(taskType, taskId)
             ?: createBaseTask().also {
                 ClientTaskSession.addTask(it)
                 Log.d("TASKINFO", "Task created: ${it.id}")
             }
+
+        // обновляем сессию
+        updateClientTaskSession(task)
+
+        val resultTask: BaseTask = task
 
         Log.d("TASKINFO", "ClientTaskSession count=${ClientTaskSession.getTaskCount()}")
 

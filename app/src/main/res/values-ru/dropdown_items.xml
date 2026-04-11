@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/values/dropdown_items.xml -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="class_5_topics" tools:ignore="InconsistentArrays">
+        <item>1:E_O_v_slovah:Правописание о – е после шипящих и ц в окончаниях существительных</item>
+        <item>2:Dlya_Proverki:Для Проверки</item>
+        <item>3:NE_s_glagalami: Глагол как часть речи. Не с глаголами</item>
+        <item>4:Cheredovanie_E_I:Корни с чередованием Е//И в глаголах</item>
+        <item>5:Tire_mezhdu_podlezhaschim_i_skazuemym:Тире между подлежащим и сказуемым</item>
+        <item>6:Glasnye_v_suffiksah_imyon_suschestvitelnyh__EK___IK_:Гласные в суффиксах имён существительных -ЕК- – -ИК- (-ЧИК-)</item>
+    </string-array>
+
+    <string-array name="class_6_topics">
+        <item>104:test1:Дельта</item>
+        <item>105:test2:Эпсилон</item>
+    </string-array>
+
+    <string-array name="class_7_topics">
+        <item>106:test1:Зета</item>
+        <item>107:test2:Эта</item>
+        <item>108:test3:Тета</item>
+    </string-array>
+</resources>

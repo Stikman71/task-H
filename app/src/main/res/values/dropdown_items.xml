@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- res/values/dropdown_items.xml -->
-<resources>
-    <string-array name="class_5_topics">
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="class_5_topics" tools:ignore="InconsistentArrays">
         <item>1:E_O_v_slovah:Е/О в словах</item>
         <item>2:Dlya_Proverki:Для Проверки</item>
-        <item>3:test3:Гамма</item>
+        <item>3:NE_s_glagalami:"НЕ" с глаголами</item>
+        <item>4:Cheredovanie_E_I:Чередование Е/И</item>
+        <item>5:Tire_mezhdu_podlezhaschim_i_skazuemym:Тире</item>
     </string-array>
 
     <string-array name="class_6_topics">

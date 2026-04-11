@@ -1,8 +1,11 @@
 package com.helper.TaskFragments.sentencesType.layout
 
 import android.content.Context
+import android.os.SystemClock
 import android.util.AttributeSet
 import android.util.Log
+import android.view.MotionEvent
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.contains
 import com.google.android.flexbox.FlexboxLayout
@@ -15,8 +18,9 @@ class ExtendFlexboxLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    private val name: String="DN",
-    private var maxChild:Int=20
+    private val name: String="",
+    private var maxChild:Int=20,
+    private var canBeEmpty: Boolean =false
 ) : FlexboxLayout(context, attrs, defStyleAttr), ISmartInsert{
 
     override fun tryInsert(insertable: DragTextView): Boolean {
@@ -25,19 +29,23 @@ class ExtendFlexboxLayout @JvmOverloads constructor(
             insertable,
             insertable.context
         ) ?: return false
-
         val newView = cloned
+
+        newView.applySafeLayoutParams(24,0,24,0)
 
         if (maxChild == 1 && isNotEmpty()) {
 
-            val existing = getChildAt(0) as? TextView ?: return false
+            val existing = getChildAt(0) as? DragTextView ?: return false
 
             return if (existing.text.contains("_")) {
                 removeViewAt(0)
                 addView(newView)
                 true
             } else {
+                existing.defaultStatus()
                 SafeClone.replaceDragTextViewSafe(existing, insertable)
+                existing.applySafeLayoutParams(24,0,24,0)
+
                 false
             }
         }
@@ -50,8 +58,12 @@ class ExtendFlexboxLayout @JvmOverloads constructor(
         maxChild=c
     }
 
+    fun canBeEmpty(f: Boolean){
+        canBeEmpty=f
+    }
+
     override fun checkContainer(): Int {
-        if(isEmpty()){
+        if(isEmpty() && !canBeEmpty){
             this.isClickable = false
             addView(DragTextView(context,name))
         }

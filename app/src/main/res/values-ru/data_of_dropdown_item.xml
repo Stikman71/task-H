@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="topic_1_tasks">
+        <item>1:READ:Теория</item>
+        <item>2:VIDEO:TEST_VIDEO</item>
+        <item>3:CHECK TASK 1:Контрольное задание 1</item>
+        <item>4:CHECK TASK 2:Контрольное задание 2</item>
+        <item>5:TASK:Задания для самопроверки</item>
+    </string-array>
+
+    <string-array name="topic_2_tasks">
+        <item>1:READ:Теория</item>
+        <item>2:SENTENCE:tsk_Beta_1</item>
+    </string-array>
+
+    <string-array name="topic_3_tasks">
+        <item>1:READ:Теория</item>
+        <item>2:VIDEO:TEST_VIDEO</item>
+        <item>3:CHECK TASK 1:Контрольное задание 1</item>
+        <item>4:CHECK TASK 2:Контрольное задание 2</item>
+        <item>5:TASK:Задания для самопроверки</item>
+    </string-array>
+
+    <string-array name="topic_4_tasks">
+        <item>1:READ:Теория</item>
+        <item>2:VIDEO:TEST_VIDEO</item>
+        <item>3:CHECK TASK 1:Контрольное задание 1</item>
+        <item>4:CHECK TASK 2:Контрольное задание 2</item>
+        <item>5:TASK:Задания для самопроверки</item>
+    </string-array>
+    <string-array name="topic_5_tasks">
+        <item>1:READ:Теория</item>
+        <item>2:VIDEO:TEST_VIDEO</item>
+        <item>3:CHECK TASK 1:Контрольное задание 1</item>
+        <item>4:CHECK TASK 2:Контрольное задание 2</item>
+        <item>5:TASK:Задания для самопроверки</item>
+    </string-array>
+
+    <string-array name="topic_6_tasks">
+        <item>1:READ:Теория</item>
+        <item>2:VIDEO:TEST_VIDEO</item>
+        <item>3:CHECK TASK 1:Контрольное задание 1</item>
+        <item>4:CHECK TASK 2:Контрольное задание 2</item>
+        <item>5:TASK:Задания для самопроверки</item>
+    </string-array>
+
+
+</resources>

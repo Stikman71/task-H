@@ -42,6 +42,10 @@ class TaskSliderFragment : TaskFragmentBase<ViewBinding>() {
     override fun parsedOptions() {
     }
 
+    override fun showItem() {
+        TODO("Not yet implemented")
+    }
+
     override fun collectClientAnswer() {
         TODO("Not yet implemented")
     }

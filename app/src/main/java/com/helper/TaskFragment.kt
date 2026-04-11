@@ -47,9 +47,6 @@ class TaskFragment : Fragment() {
     private var taskIndexes:MutableList<String> = mutableListOf()
     private var currentFragment: TaskFragmentBase<out ViewBinding> = EmptyTaskFragment()
     var askJsonTask = JSONHandler()
-
-
-
     private val dataLC: DataLC by activityViewModels()
     lateinit var binding: FragmentTaskBinding
 
@@ -63,10 +60,13 @@ class TaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val task = arguments?.getString(ARG_TASK_TYPE)
-        val jsonFileName = when (task) {
-            "TASK" -> "task.json"
-            "CHECK TASK" -> "check_task.json"
-            else -> "task.json" // на всякий случай
+        val jsonFileName = when {
+            task == "TASK" -> "task.json"
+            task?.startsWith("CHECK TASK")!! -> {
+                val number = Regex("""CHECK TASK (\d+)""").find(task)?.groupValues?.get(1)
+                if (number != null) "check_task_$number.json" else "check_task.json"
+            }
+            else -> error("Unknown task: $task")
         }
         // Чтение из аргементов
         val pathParts = arrayOf(

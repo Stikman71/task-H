@@ -46,6 +46,10 @@ class EmptyTaskFragment : TaskFragmentBase<ViewBinding>() {
         TODO("Not yet implemented")
     }
 
+    override fun showItem() {
+        TODO("Not yet implemented")
+    }
+
     override fun collectClientAnswer() {
         TODO("Not yet implemented")
     }

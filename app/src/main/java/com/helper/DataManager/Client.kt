@@ -46,5 +46,11 @@ object ClientTaskSession{
         results[taskId] = result
     }
     fun getResult(taskId: String): AnswerCheckResult? = results[taskId]
+
+    fun clear() {
+        tasks.clear()
+        results.clear()
+        currentIndex = 0
+    }
 }
 

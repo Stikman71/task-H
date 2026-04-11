@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <!-- SPINER -->
+    <style name="ProjecetSpiner" parent="Widget.AppCompat.Spinner.DropDown">
+        <item name="android:popupBackground">@color/colorSurface</item>
+        <item name="android:dropDownVerticalOffset">4dp</item>
+        <item name="android:dropDownWidth">match_parent</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+    </style>
+    <!-- SPINER -->
+
     <!-- TEXT -->
     <style name="AppText">
         <item name="android:textColor">@color/colorTextPrimary</item>
@@ -23,23 +34,34 @@
 
     <!-- BUTTON -->
     <style name="AppButton.Base" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/colorButtonText</item>
-        <item name="backgroundTint">@color/colorButtonBackground</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:paddingStart">16dp</item>
-        <item name="android:paddingEnd">16dp</item>
-        <item name="cornerRadius">8dp</item> <!-- скругление -->
+        <item name="android:textColor">#FFFFFF</item>   <!-- Белый текст -->
+        <item name="backgroundTint">#000000</item>      <!-- Черный фон -->
+        <item name="android:textSize">16sp</item>       <!-- Размер текста -->
+        <item name="android:paddingStart">16dp</item>   <!-- Отступ слева -->
+        <item name="android:paddingEnd">16dp</item>     <!-- Отступ справа -->
+        <item name="cornerRadius">8dp</item>            <!-- Скругление углов -->
     </style>
+
+
 
     <!-- Для основной кнопки -->
     <style name="AppButton.Primary" parent="AppButton.Base"/>
 
-    <style name="AppButton.Recycler" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/colorButtonText</item> <!-- темный текст -->
-        <item name="backgroundTint">@color/colorButtonBackground</item> <!-- оранжевый фон -->
-        <item name="android:textSize">16sp</item>
-        <item name="cornerRadius">8dp</item>
+    <!-- Кнопки в recyclerView -->
+    <style name="ThemeOverlay.MyButton" parent="">
+        <item name="colorOnPrimary">@color/colorTextPrimary</item>
     </style>
+    <style name="ShapeAppearanceOverlay.MyButton" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+    <style name="MyButtonStyle" parent="Widget.Material3.Button">
+        <item name="android:backgroundTint">@color/colorSurface</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:theme">@style/ThemeOverlay.MyButton</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MyButton</item>
+    </style>
+    <!-- Кнопки в recyclerView -->
 
 
     <style name="DragTextViewDefaultStyle">
@@ -52,7 +74,7 @@
         <item name="android:textStyle">bold</item>
 
         <!-- белый текст -->
-        <item name="android:textColor">@color/colorButtonBackground</item>
+        <item name="android:textColor">#A3CA1E</item>
 
         <!-- прозрачный фон -->
         <item name="android:background">@android:color/transparent</item>
@@ -60,29 +82,29 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <!-- Стиль для TextView в FillInTheBlankFragment -->
-    <style name="WordLayoutTextViewStyle">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/colorButtonBackground</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:padding">4dp</item>
+    <style name="TextViewSentence">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">24dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
-    <!-- Стиль для EditText в FillInTheBlankFragment -->
-    <style name="WordLayoutEditTextStyle">
-        <item name="android:textColor">#E47E17</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">8dp</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">4dp</item>
-        <item name="colorControlActivated">#FF0000</item>
+    <!-- Стиль для TextView в FillInTheBlankFragment -->
+                    <!-- В КОДЕ -->
+    <style name="MyTextStyle1122">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
     </style>
 
     <style name="SelectableWord">
 
         <!-- цвет текста -->
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
 
         <!-- размер -->
         <item name="android:textSize">18sp</item>
@@ -100,5 +122,7 @@
         <item name="android:paddingBottom">4dp</item>
 
     </style>
+
+
 
 </resources>

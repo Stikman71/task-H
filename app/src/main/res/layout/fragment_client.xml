@@ -18,8 +18,8 @@
             android:hint="Имя"
             app:boxBackgroundMode="filled"
             app:boxBackgroundColor="@color/colorSurface"
-            android:textColorHint="@color/colorAccent"
-            app:boxStrokeColor="@color/colorAccent"
+            android:textColorHint="@color/colorTextSecondary"
+            app:boxStrokeColor="@color/colorTextSecondary"
             android:layout_marginTop="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -38,8 +38,8 @@
             android:hint="Фамилия"
             app:boxBackgroundMode="filled"
             app:boxBackgroundColor="@color/colorSurface"
-            app:boxStrokeColor="@color/colorAccent"
-            android:textColorHint="@color/colorAccent"
+            android:textColorHint="@color/colorTextSecondary"
+            app:boxStrokeColor="@color/colorTextSecondary"
             android:layout_marginTop="12dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -55,11 +55,11 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Деятельность"
+            android:hint="Класс"
             app:boxBackgroundMode="filled"
             app:boxBackgroundColor="@color/colorSurface"
-            app:boxStrokeColor="@color/colorAccent"
-            android:textColorHint="@color/colorAccent"
+            android:textColorHint="@color/colorTextSecondary"
+            app:boxStrokeColor="@color/colorTextSecondary"
             android:layout_marginTop="12dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -83,7 +83,9 @@
             style="@style/AppButton.Primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next"
+            android:text="К заданиям"
+            android:backgroundTint="@color/colorSurface"
+            android:textColor="@color/colorTextPrimary"
             android:layout_gravity="end"
             android:layout_marginTop="16dp"/>
 

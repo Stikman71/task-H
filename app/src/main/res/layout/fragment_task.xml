@@ -46,6 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Сбросить"
+            android:backgroundTint="@color/color_surface_button"
+            android:textColor="@color/colorTextPrimary"
             android:layout_marginEnd="8dp"/>
 
         <Button
@@ -54,6 +56,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Проверить"
+            android:backgroundTint="@color/color_surface_button"
+            android:textColor="@color/colorTextPrimary"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
 
@@ -77,6 +81,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Назад"
+            android:backgroundTint="@color/color_surface_button"
+            android:textColor="@color/colorTextPrimary"
             android:layout_marginEnd="8dp"/>
 
         <Button
@@ -85,6 +91,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Далее"
+            android:backgroundTint="@color/color_surface_button"
+            android:textColor="@color/colorTextPrimary"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
 
@@ -93,6 +101,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Завершить"
+        android:backgroundTint="@color/color_surface_button"
+        android:textColor="@color/colorTextPrimary"
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,0 +1,118 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flexbox="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:background="@color/colorSurface">
+
+    <!-- Верхние лейблы -->
+    <LinearLayout
+        android:id="@+id/labels"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/label_top_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Left Column"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/label_top_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Right Column"
+            android:textStyle="bold"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <!-- Нижний контейнер фиксированной высоты -->
+    <com.helper.TaskFragments.sentencesType.UnifiedTouchScrollView
+        android:id="@+id/bottom_scroll"
+        android:layout_width="0dp"
+        android:layout_height="140dp"
+        android:scrollbars="vertical"
+        android:background="#D0D0D0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fillViewport="true">
+
+        <com.helper.TaskFragments.sentencesType.layout.ExtendFlexboxLayout
+                android:id="@+id/container_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            flexbox:flexWrap="wrap"/>
+    </com.helper.TaskFragments.sentencesType.UnifiedTouchScrollView>
+
+    <!-- Верхние контейнеры: две колонки с scroll -->
+    <LinearLayout
+        android:id="@+id/top_containers"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toBottomOf="@id/labels"
+        app:layout_constraintBottom_toTopOf="@id/bottom_scroll"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Левая колонка -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scrollbars="vertical"
+            android:overScrollMode="ifContentScrolls"
+            android:fillViewport="true">
+
+            <com.helper.TaskFragments.sentencesType.layout.ExtendFlexboxLayout
+                android:id="@+id/container_top_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="1dp"
+                android:background="@drawable/stroke_fro_flex"
+                android:padding="4dp"
+                flexbox:flexWrap="wrap">
+            </com.helper.TaskFragments.sentencesType.layout.ExtendFlexboxLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- Правая колонка -->
+        <androidx.core.widget.NestedScrollView
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:scrollbars="vertical"
+            android:overScrollMode="ifContentScrolls"
+            android:fillViewport="true"
+            >
+
+            <com.helper.TaskFragments.sentencesType.layout.ExtendFlexboxLayout
+                android:id="@+id/container_top_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="1dp"
+                android:background="@drawable/stroke_fro_flex"
+                android:padding="4dp"
+                flexbox:flexWrap="wrap"/>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.helper.DataManager.CheckTask_demo
+import com.helper.DataManager.ClientTaskSession
 import com.helper.DataManager.DataLC
 import com.helper.Logic.ButtonAdapter
 import com.helper.Logic.SpinnerItem
@@ -23,194 +24,6 @@ import com.helper.TaskFragments.ReadingFragment
 import com.helper.TaskFragments.VideoFragment
 import com.helper.databinding.FragmentMainBinding
 import kotlin.getValue
-//data class SpinnerItem(val idName: String, val name: String)
-
-//class MainFragment : Fragment() {
-//
-//    private val dataLC: DataLC by activityViewModels()
-//
-//    private lateinit var binding: FragmentMainBinding
-//    private lateinit var recyclerView: RecyclerView
-//    private lateinit var spinner: Spinner
-//
-//    private var spinnerValues: List<SpinnerItem> = emptyList()
-//    private var spinnerReady: Boolean = false
-//
-//    private val TAG = "MainFragment"  // для Logcat
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        binding = FragmentMainBinding.inflate(inflater, container, false)
-//        Log.d(TAG, "onCreateView: binding inflated")
-//        return binding.root
-//    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        spinner = binding.spinner
-//        recyclerView = binding.recyclerMatrix
-//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//        Log.d(TAG, "onViewCreated: views initialized")
-//
-//        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//                Log.d(TAG, "onItemSelected called: position=$position, spinnerReady=$spinnerReady")
-//                if (!spinnerReady) return
-//
-//                val selectedItem = spinnerValues.getOrNull(position)
-//                if (selectedItem == null) {
-//                    Log.w(TAG, "selectedItem is null for position=$position")
-//                    return
-//                }
-//
-//
-//                val selectedId:String = selectedItem.idName
-//                val selectedName = selectedItem.name
-//                Log.d(TAG, "Spinner selected: id=$selectedId, name=$selectedName")
-//
-//                val currentTopicID = dataLC.currentSession.value?.topic
-//                if (currentTopicID != selectedId) {
-//                    dataLC.currentSession.value =
-//                        dataLC.currentSession.value?.copy(topic = selectedName)
-//                    Log.d(TAG, "Updated currentSession.topicID to $selectedId")
-//                }
-//
-//                try {
-//                    getButtonsForOption(requireContext(), selectedId.toString())
-//                } catch (e: Exception) {
-//                    Log.e(TAG, "Error in getButtonsForOption", e)
-//                }
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>) {
-//                Log.d(TAG, "onNothingSelected called")
-//            }
-//        }
-//
-//        dataLC.currentSession.observe(viewLifecycleOwner) { session ->
-//            val ctx = context ?: run {
-//                Log.w(TAG, "context is null in currentSession observer")
-//                return@observe
-//            }
-//
-//            val newSpinnerValues = try {
-//                getSpinnerValues(ctx, session?.classID)
-//            } catch (e: Exception) {
-//                Log.e(TAG, "Error getting spinner values", e)
-//                emptyList()
-//            }
-//
-//            if (spinnerValues != newSpinnerValues) {
-//                spinnerValues = newSpinnerValues
-//                updateSpinner(spinnerValues)
-//                spinnerReady = true
-//                Log.d(TAG, "Spinner updated with ${spinnerValues.size} items")
-//            }
-//        }
-//    }
-//
-//    private fun getSpinnerValues(context: Context, classID: Int?): List<SpinnerItem> {
-//        if (classID == null) {
-//            Log.w(TAG, "getSpinnerValues: classID is null")
-//            return emptyList()
-//        }
-//
-//        val arrayName = "class_${classID}_topics"
-//        val resID = context.resources.getIdentifier(arrayName, "array", context.packageName)
-//        if (resID == 0) {
-//            Log.w(TAG, "getSpinnerValues: array resource $arrayName not found")
-//            return emptyList()
-//        }
-//
-//        val rawArray = context.resources.getStringArray(resID)
-//        Log.d(TAG, "getSpinnerValues: loaded ${rawArray.size} items from $arrayName")
-//
-//        return rawArray.mapNotNull { item ->
-//            val parts = item.split(":", limit = 2)
-//            if (parts.size != 2) {
-//                Log.w(TAG, "Invalid spinner item format: $item")
-//                null
-//            } else {
-//                val id = parts[0]
-//                val name = parts[1]
-//                if (id != null) SpinnerItem(id, name) else {
-//                    Log.w(TAG, "Invalid id in spinner item: $item")
-//                    null
-//                }
-//            }
-//        }
-//    }
-//
-//    private fun updateSpinner(values: List<SpinnerItem>) {
-//        val adapter = ArrayAdapter(
-//            requireContext(),
-//            android.R.layout.simple_spinner_item,
-//            values.map { it.name }
-//        )
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        spinner.adapter = adapter
-//        Log.d(TAG, "updateSpinner: adapter set with ${values.size} items")
-//    }
-//
-//    private fun getButtonsForOption(context: Context, optionID: String): List<String> {
-//        val arrayName = "topic_${optionID}_tasks"
-//        val resId = context.resources.getIdentifier(arrayName, "array", context.packageName)
-//
-//        val buttonItems = if (resId != 0) context.resources.getStringArray(resId).toList()
-//        else emptyList()
-//        Log.d(TAG, "getButtonsForOption: $arrayName has ${buttonItems.size} items")
-//
-//        createButtons(buttonItems)
-//        return buttonItems
-//    }
-//
-//    private fun createButtons(buttonItems: List<String>) {
-//        if (!this::recyclerView.isInitialized) {
-//            Log.w(TAG, "createButtons: recyclerView not initialized")
-//            return
-//        }
-//
-//        recyclerView.adapter = ButtonAdapter(buttonItems) { id, type ->
-//            if (type.isNullOrEmpty()) {
-//                Log.w(TAG, "ButtonAdapter callback type is null/empty")
-//                return@ButtonAdapter
-//            }
-//
-//            val taskType = runCatching { TaskType.valueOf(type.uppercase()) }.getOrNull()
-//            Log.d(TAG, "Button clicked: id=$id, type=$type, taskType=$taskType")
-//            Log.d("Navigate","CHECK:${sanitizeTopicName(dataLC.currentSession.value?.topic.toString())}")
-//
-//
-//            val fragment: Fragment = when {
-//                type == "READ" -> ReadingFragment.newInstance()
-//                taskType != null -> ClientFragment.newInstance(taskType)
-//                else -> Fragment() // fallback
-//            }
-//
-//            (activity as? MainActivity)?.OpenFragment(fragment, R.id.content_container)
-//        }
-//
-//        Log.d(TAG, "createButtons: adapter set with ${buttonItems.size} buttons")
-//    }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        spinnerValues = emptyList()
-//        spinnerReady = false
-//        Log.d(TAG, "onDestroyView: cleared spinnerValues and spinnerReady")
-//    }
-//
-//    companion object {
-//        @JvmStatic
-//        fun newInstance() = MainFragment()
-//    }
-//}
 
 
 class MainFragment : Fragment() {
@@ -239,6 +52,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         spinner = binding.spinner
+
         recyclerView = binding.recyclerMatrix
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         Log.d(TAG, "onViewCreated: views initialized")
@@ -299,6 +113,9 @@ class MainFragment : Fragment() {
                 Log.d(TAG, "Spinner updated with ${spinnerValues.size} items")
             }
         }
+
+        ClientTaskSession.clear()
+        Log.e("DEBUG","TEST len ${ClientTaskSession.tasks.size}")
     }
 
     // ================== Spinner helpers ==================
@@ -330,12 +147,12 @@ class MainFragment : Fragment() {
     }
 
     private fun updateSpinner(values: List<SpinnerItem>) {
-        val adapter = ArrayAdapter(
+        val adapter = ArrayAdapter<String>(
             requireContext(),
-            android.R.layout.simple_spinner_item,
+            R.layout.spinner_item,           // выбранный элемент
             values.map { it.display }
         )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) // стандартный dropdown
         spinner.adapter = adapter
         Log.d(TAG, "updateSpinner: adapter set with ${values.size} items")
     }

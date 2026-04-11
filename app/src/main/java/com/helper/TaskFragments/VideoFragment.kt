@@ -9,11 +9,18 @@ import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
+import androidx.media3.common.util.Log
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import com.helper.DataManager.DataLC
+import com.helper.Logic.JSON.JSONHandler
+import com.helper.Logic.JSON.JsonUtils
+import com.helper.Logic.JSON.PathBuilder
+import com.helper.Logic.JSON.sanitizeTopicName
 import com.helper.MainActivity
 import com.helper.databinding.FragmentVideoBinding
+import org.json.JSONObject
+import java.io.FileNotFoundException
 import kotlin.getValue
 @UnstableApi
 @OptIn(androidx.media3.common.util.UnstableApi::class)
@@ -27,7 +34,7 @@ class VideoFragment : Fragment() {
 
     // Для теста: начало и конец воспроизведения в миллисекундах
     private val startMs: Long = 5000L   // проигрывать с 5-й секунды
-    private val endMs: Long = 15000L    // до 15-й секунды
+    private val endMs: Long = C.TIME_END_OF_SOURCE   // до 15-й секунды
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,12 +63,25 @@ class VideoFragment : Fragment() {
         player = ExoPlayer.Builder(requireContext()).build()
         binding.playerView.player = player
 
+        val pathParts = arrayOf(
+            "Tasks",
+            dataLC.currentSession.value?.language!!,
+            "Class_${dataLC.currentSession.value?.classID!!}",
+            sanitizeTopicName(dataLC.currentSession.value?.topic!!),
+            "video.json"
+        )
+        val path = PathBuilder.buildPathForTask(pathParts)
+        val jsonString = try {
+            context?.assets?.open(path)?.bufferedReader().use { it?.readText() }
+        } catch (e: FileNotFoundException) {
+            android.util.Log.d("PathBuilder", "Файл не найден: $path")
+            throw RuntimeException("Файл не найден: $path")
+        }
+        val jsonObject = JSONObject(jsonString!!)
         // --- Тестовое видео ---
-        val videoUri = "android.resource://${requireContext().packageName}/raw/test".toUri()
-
-        // --- Тестовые start и end прямо в методе ---
-        val startMs: Long = 0L   // с 5-й секунды
-        val endMs: Long = C.TIME_END_OF_SOURCE    // до 15-й секунды
+        //val videoUri = "android.resource://${requireContext().packageName}/raw/test".toUri()
+        val rawUrl = jsonObject.get("url").toString()
+        val videoUri = getDriveDirectLink(rawUrl)?.toUri() ?: return
 
         // Создаём MediaItem с Clipping
         val mediaItem = MediaItem.Builder()
@@ -89,6 +109,14 @@ class VideoFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun getDriveDirectLink(rawUrl: String): String? {
+        // Регулярка для извлечения FILE_ID
+        val regex = "https://drive\\.google\\.com/file/d/([a-zA-Z0-9_-]+)/view.*".toRegex()
+        val match = regex.find(rawUrl)
+        val fileId = match?.groups?.get(1)?.value
+        return fileId?.let { "https://drive.google.com/uc?export=download&id=$it" }
     }
 
     companion object {

@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.helper.DataManager.ClientTaskSession
 import com.helper.DataManager.DataLC
 import com.helper.Logic.ButtonAdapter
 import com.helper.databinding.FragmentHelloBinding
@@ -52,7 +53,6 @@ class HelloFragment : Fragment() {
         binding.buttonLanguage.setOnClickListener {
             val languages = arrayOf("English", "Русский")
             val codes = arrayOf("en", "ru")
-
             AlertDialog.Builder(requireContext())
                 .setTitle("Select language")
                 .setItems(languages) { _, which ->
@@ -70,13 +70,8 @@ class HelloFragment : Fragment() {
                 }
                 .show()
         }
-    }
 
-//    fun executeIndexFromButtonID(button: Button):Int{
-//        val rName=resources.getResourceEntryName(button.id)
-//        val idStr=rName.substringAfter("button_id_")
-//        return idStr.toInt()
-//    }
+    }
 
     companion object{
         @JvmStatic
@@ -85,16 +80,16 @@ class HelloFragment : Fragment() {
 
 
     fun setAppLocale(context: Context, language: String) {
-        val locale = Locale.Builder().setLanguage(language).build()
-        Locale.setDefault(locale)
-        val config = Configuration(context.resources.configuration)
-        config.setLocale(locale)
-        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+            val locale = Locale.Builder().setLanguage(language).build()
+            Locale.setDefault(locale)
+            val config = Configuration(context.resources.configuration)
+            config.setLocale(locale)
+            context.resources.updateConfiguration(config, context.resources.displayMetrics)
     }
     fun updateUI() {
         // Берём массив строк из ресурсов для текущей локали
         val buttonItems = resources.getStringArray(R.array.option_main).toList()
-        println("buttonItems: $buttonItems")
+
 
         // Если адаптер уже установлен, обновляем данные
         val adapter = recyclerView.adapter

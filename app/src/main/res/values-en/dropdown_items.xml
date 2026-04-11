@@ -2,7 +2,7 @@
 <!-- res/values/dropdown_items.xml -->
 <resources>
     <string-array name="class_5_topics">
-        <item>1:E_O_v_slovah:E_O_v_slovah</item>
+        <item>1:Privet!__tony,_vspominaem_fonetiku:你好！Nǐ hǎo! Привет! </item>
         <item>2:Dlya_Proverki:Dlya_Proverki</item>
         <item>3:test3:111</item>
     </string-array>
