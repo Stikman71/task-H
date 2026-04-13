@@ -4,17 +4,13 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
-import com.helper.DataManager.ClientTaskSession
 import com.helper.DataManager.DataLC
 import com.helper.Logic.ButtonAdapter
 import com.helper.databinding.FragmentHelloBinding
@@ -28,7 +24,7 @@ class HelloFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding=FragmentHelloBinding.inflate(inflater)
         return binding.root
@@ -51,10 +47,10 @@ class HelloFragment : Fragment() {
 
         // Кнопка выбора языка
         binding.buttonLanguage.setOnClickListener {
-            val languages = arrayOf("English", "Русский")
-            val codes = arrayOf("en", "ru")
+            val languages = arrayOf("Китайский", "Русский")
+            val codes = arrayOf("ch", "ru")
             AlertDialog.Builder(requireContext())
-                .setTitle("Select language")
+                .setTitle("Выберите язык")
                 .setItems(languages) { _, which ->
                     val selectedLang = codes[which]
 

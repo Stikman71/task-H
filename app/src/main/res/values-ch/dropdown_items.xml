@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/values/dropdown_items.xml -->
+<resources>
+    <string-array name="class_5_topics">
+        <item>1:Privet__tony__vspominaem_fonetiku:你好！Nǐ hǎo! Привет! </item>
+        <item>2:Kto_on:他是谁? Tā shì shéi Кто он? (+ наречие 也 и отрицание через 不</item>
+        <item>3:Skolko_chelovek_v_tvoej_seme: Сколько человек в твоей семье? (+ счётное слово 口 и наречие 还</item>
+    </string-array>
+
+    <string-array name="class_6_topics">
+    </string-array>
+
+    <string-array name="class_7_topics">
+    </string-array>
+</resources>

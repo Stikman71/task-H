@@ -9,12 +9,9 @@ import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
-import androidx.media3.common.util.Log
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import com.helper.DataManager.DataLC
-import com.helper.Logic.JSON.JSONHandler
-import com.helper.Logic.JSON.JsonUtils
 import com.helper.Logic.JSON.PathBuilder
 import com.helper.Logic.JSON.sanitizeTopicName
 import com.helper.MainActivity
@@ -23,7 +20,7 @@ import org.json.JSONObject
 import java.io.FileNotFoundException
 import kotlin.getValue
 @UnstableApi
-@OptIn(androidx.media3.common.util.UnstableApi::class)
+@OptIn(UnstableApi::class)
 class VideoFragment : Fragment() {
     private val dataLC: DataLC by activityViewModels()
 
@@ -33,8 +30,8 @@ class VideoFragment : Fragment() {
     private var player: ExoPlayer? = null
 
     // Для теста: начало и конец воспроизведения в миллисекундах
-    private val startMs: Long = 5000L   // проигрывать с 5-й секунды
-    private val endMs: Long = C.TIME_END_OF_SOURCE   // до 15-й секунды
+    private var startMs: Long = 0L   // проигрывать с 5-й секунды
+    private var endMs: Long = C.TIME_END_OF_SOURCE   // до 15-й секунды
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,6 +79,8 @@ class VideoFragment : Fragment() {
         //val videoUri = "android.resource://${requireContext().packageName}/raw/test".toUri()
         val rawUrl = jsonObject.get("url").toString()
         val videoUri = getDriveDirectLink(rawUrl)?.toUri() ?: return
+        endMs=jsonObject.get("endTime").toString().toLong()
+        startMs=jsonObject.get("startTime").toString().toLong()
 
         // Создаём MediaItem с Clipping
         val mediaItem = MediaItem.Builder()
